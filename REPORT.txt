@@ -1,0 +1,33 @@
+# NASA RAG Chatbot - Implementation Report
+
+## Architecture and Design Decisions
+
+The project configuration and directory structure was provided as a modular architecture.
+We decided to keep this approach as it separates concerns effectively: llm_client.py handles OpenAI integration, rag_client.py manages ChromaDB retrieval, and ragas_evaluator.py handles quality metrics.
+
+## RAGAS Metrics Selection
+
+Three RAGAS metrics were selected for comprehensive evaluation:
+
+- **Response Relevancy**: Measures if the generated answer actually addresses the user's question
+- **Faithfulness**: Ensures the answer is grounded in the retrieved documents, not hallucinated
+- **RougeScore**: A non-LLM metric that measures text overlap between response and context, providing faster evaluation
+
+## Configuration Options
+
+The chat interface provides options to choose the OpenAI model (gpt-3.5-turbo, gpt-4) as well as the number of documents to retrieve, allowing users to balance response quality with performance.
+
+## Challenges and Solutions
+
+- **File Encoding Issues**: The Apollo 13 transcript files contained Windows-encoded characters causing UTF-8 decode errors.
+This was solved by implementing a fallback to latin-1 encoding in the embedding pipeline.
+
+## Testing Approach and Results
+
+Integration testing was performed across all components. 
+The system correctly handles edge cases: when requesting information about Apollo 12 (not in our corpus), Faithfulness scores are very low, demonstrating the metric works as intended.
+
+## Future Improvements
+
+- Add timing metrics to the dashboard for performance visibility
+- Include additional mission documents (Apollo 11, Challenger) to make the chatbot more robust

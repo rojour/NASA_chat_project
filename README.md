@@ -28,8 +28,8 @@ By completing this project, you will learn to:
 ## 🚀 Getting Started
 
 ### Prerequisites
-- Python 3.8+
-- OpenAI API key
+- Python 3.10+ (recommended: 3.12)
+- OpenAI API key (or Vocareum API key for educational environments)
 - Basic understanding of Python, APIs, and vector databases
 - Familiarity with machine learning concepts
 
@@ -40,15 +40,39 @@ By completing this project, you will learn to:
    cd project
    ```
 
-2. **Install dependencies**:
+2. **Create and activate a virtual environment** (recommended):
+   ```bash
+   python -m venv venv
+   source venv/bin/activate  # On Windows: venv\Scripts\activate
+   ```
+
+3. **Install dependencies**:
    ```bash
    pip install -r requirements.txt
    ```
 
-3. **Set up your OpenAI API key**:
+4. **Set up your API key**:
+
+   Create a `.env` file in the project directory:
    ```bash
-   export OPENAI_API_KEY="your-api-key-here"
+   OPENAI_API_KEY=your-api-key-here
    ```
+
+   **For Vocareum/Educational Environments**: If using a Vocareum-provided API key (format: `voc-xxxxx`), the system is pre-configured to use the Vocareum proxy endpoint.
+
+### Running the Application
+
+1. **Process documents** (first time only):
+   ```bash
+   python embedding_pipeline.py --data-path ./apollo13
+   ```
+
+2. **Launch the chat interface**:
+   ```bash
+   streamlit run chat.py
+   ```
+
+3. **Access the application** at `http://localhost:8501`
 
 ## 📚 Learning Path
 

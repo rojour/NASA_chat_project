@@ -1,0 +1,14 @@
+# NASA RAG Chat - Requirements
+# Install with: pip install -r requirements.txt
+
+# Core dependencies
+openai>=1.0.0
+chromadb>=1.0.0
+streamlit>=1.30.0
+
+# RAGAS evaluation
+ragas>=0.1.0
+langchain-openai>=0.0.5
+
+# Utility
+pandas>=2.0.0
