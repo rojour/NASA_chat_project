@@ -43,7 +43,7 @@ def discover_chroma_backends() -> Dict[str, Dict[str, str]]:
                 backends[key] = {
                     "directory": str(chroma_dir),
                     "collection_name": collection.name,
-                    "display_name": f"{collection.name} ({chroma_dir.name}) - {doc_count} docs",
+                    "display_name": f"{chroma_dir.name} - {doc_count} docs",
                     "doc_count": doc_count
                 }
 
@@ -142,12 +142,14 @@ def retrieve_documents(collection, query: str, n_results: int = 3,
     # Return query results to caller
     return results
 
-def format_context(documents: List[str], metadatas: List[Dict]) -> str:
+def format_context(documents: List[str], metadatas: List[Dict],
+                   distances: Optional[List[float]] = None) -> str:
     """Format retrieved documents into context for LLM consumption
 
     Args:
         documents: List of document texts
         metadatas: List of metadata dictionaries
+        distances: Optional list of distance scores (lower = more relevant)
 
     Returns:
         Formatted context string ready for LLM
@@ -155,14 +157,40 @@ def format_context(documents: List[str], metadatas: List[Dict]) -> str:
     if not documents:
         return ""
 
-    # Initialize list with header text for context section
+    # Step 1: Combine documents with metadatas and distances
+    if distances:
+        combined = list(zip(documents, metadatas, distances))
+        # Sort by distance (lower = more relevant)
+        combined.sort(key=lambda x: x[2])
+    else:
+        combined = [(doc, meta, 0) for doc, meta in zip(documents, metadatas)]
+
+    # Step 2: Deduplicate - remove near-identical documents
+    unique_docs = []
+    for doc, metadata, distance in combined:
+        # Check if this document is too similar to one we already have
+        is_duplicate = False
+        doc_normalized = doc.lower().strip()[:500]
+
+        for existing_doc, _, _ in unique_docs:
+            existing_normalized = existing_doc.lower().strip()[:500]
+            # Compare first 500 chars - if 90% match, it's a duplicate
+            if len(doc_normalized) > 0 and len(existing_normalized) > 0:
+                shorter_len = min(len(doc_normalized), len(existing_normalized))
+                matches = sum(1 for a, b in zip(doc_normalized, existing_normalized) if a == b)
+                if matches / shorter_len >= 0.9:
+                    is_duplicate = True
+                    break
+
+        if not is_duplicate:
+            unique_docs.append((doc, metadata, distance))
+
+    # Step 3: Format the unique, sorted documents
     context_parts = ["=== Retrieved NASA Mission Documents ===\n"]
 
-    # Loop through paired documents and their metadata using enumeration
-    for i, (doc, metadata) in enumerate(zip(documents, metadatas), 1):
+    for i, (doc, metadata, distance) in enumerate(unique_docs, 1):
         # Extract mission information from metadata with fallback value
         mission = metadata.get("mission", "Unknown Mission")
-        # Clean up mission name formatting (replace underscores, capitalize)
         mission = mission.replace("_", " ").title()
 
         # Extract source information from metadata with fallback value
@@ -170,23 +198,19 @@ def format_context(documents: List[str], metadatas: List[Dict]) -> str:
 
         # Extract category information from metadata with fallback value
         category = metadata.get("document_category", "General")
-        # Clean up category name formatting (replace underscores, capitalize)
         category = category.replace("_", " ").title()
 
-        # Create formatted source header with index number and extracted information
+        # Create formatted source header
         source_header = f"--- Source {i}: {mission} | {category} | {source} ---"
-        # Add source header to context parts list
         context_parts.append(source_header)
 
-        # Check document length and truncate if necessary (max 2000 chars per doc)
+        # Truncate if necessary (max 2000 chars per doc)
         max_doc_length = 2000
         if len(doc) > max_doc_length:
-            truncated_doc = doc[:max_doc_length] + "... [truncated]"
-            context_parts.append(truncated_doc)
+            context_parts.append(doc[:max_doc_length] + "... [truncated]")
         else:
             context_parts.append(doc)
 
         context_parts.append("")  # Add blank line between documents
 
-    # Join all context parts with newlines and return formatted string
     return "\n".join(context_parts)

@@ -7,7 +7,7 @@ from typing import Dict, List, Optional
 # RAGAS imports
 try:
     from ragas import SingleTurnSample
-    from ragas.metrics import BleuScore, NonLLMContextPrecisionWithReference, ResponseRelevancy, Faithfulness, RougeScore
+    from ragas.metrics import ResponseRelevancy, Faithfulness, LLMContextPrecisionWithoutReference
     from ragas import evaluate
     RAGAS_AVAILABLE = True
 except ImportError:
@@ -49,8 +49,8 @@ def evaluate_response_quality(question: str, answer: str, contexts: List[str]) -
         # Faithfulness - measures if answer is grounded in the context
         faithfulness = Faithfulness(llm=evaluator_llm)
 
-        # RougeScore - measures text overlap between response and contexts (non-LLM metric)
-        rouge_score = RougeScore()
+        # LLMContextPrecisionWithoutReference - measures if retrieved context is relevant (no reference needed)
+        context_precision = LLMContextPrecisionWithoutReference(llm=evaluator_llm)
 
         # Create a sample for evaluation
         sample = SingleTurnSample(
@@ -76,10 +76,10 @@ def evaluate_response_quality(question: str, answer: str, contexts: List[str]) -
             results['faithfulness'] = f"Error: {str(e)[:50]}"
 
         try:
-            rouge_result = rouge_score.single_turn_score(sample)
-            results['rouge_score'] = float(rouge_result)
+            context_precision_result = context_precision.single_turn_score(sample)
+            results['context_precision'] = float(context_precision_result)
         except Exception as e:
-            results['rouge_score'] = f"Error: {str(e)[:50]}"
+            results['context_precision'] = f"Error: {str(e)[:50]}"
 
         # Return the evaluation results
         return results

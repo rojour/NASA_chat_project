@@ -1,0 +1,91 @@
+{
+  "config": {
+    "n_docs": 3,
+    "model": "gpt-3.5-turbo"
+  },
+  "results": [
+    {
+      "id": 1,
+      "category": "overview",
+      "question": "What was the Apollo 13 mission and what happened to it?",
+      "response": "The Apollo 13 mission was the seventh crewed mission in NASA's Apollo space program and was intended to land on the Moon. Launched on April 11, 1970, the mission's crew consisted of Commander James Lovell, Command Module Pilot John Swigert, and Lunar Module Pilot Fred Haise.\n\nUnfortunately, Apollo 13 encountered a critical issue when an oxygen tank in the service module exploded about 56 hours into the mission, leading to a loss of electrical power, water, and the ability to navigate using the stars. The explosion forced the crew to abort their lunar landing and focus on returning safely to Earth.\n\nThrough immense ingenuity and teamwork between the astronauts and Mission Control in Houston, the crew managed to navigate their spacecraft back to Earth using the lunar module as a \"lifeboat\" for life support. The mission concluded successfully with the astronauts splashing down in the Pacific Ocean on April 17, 1970.\n\nThe Apollo 13 mission is often remembered as a \"successful failure\" due to the crew's safe return despite facing life-threatening challenges in space.",
+      "scores": {
+        "response_relevancy": 0.7763470002776174,
+        "faithfulness": 0.6,
+        "context_precision": 0.9999999999666667
+      }
+    },
+    {
+      "id": 2,
+      "category": "crew",
+      "question": "Who were the crew members of Apollo 13?",
+      "response": "The crew members of Apollo 13 were Commander Jim Lovell, Command Module Pilot Jack Swigert, and Lunar Module Pilot Fred Haise. During the mission, the call signs for the Command Module (CM) and Lunar Module (LM) were Odyssey and Aquarius, respectively. The crew encountered a critical situation during their mission, leading to the famous phrase \"Houston, we've had a problem.\"",
+      "scores": {
+        "response_relevancy": 0.6329495494196345,
+        "faithfulness": 0.2857142857142857,
+        "context_precision": 0.9999999999666667
+      }
+    },
+    {
+      "id": 3,
+      "category": "emergency",
+      "question": "What caused the explosion on Apollo 13?",
+      "response": "The explosion on Apollo 13 was caused by a damaged oxygen tank. The incident occurred on April 13, 1970, during the mission to the moon. The explosion was triggered by a fire in one of the oxygen tanks in the service module. The damaged tank led to a loss of oxygen supply and power, forcing the crew to abort their lunar landing and work with NASA mission control to safely return to Earth.\n\nThe specific chain of events that led to the explosion involved a combination of factors, including a damaged wire insulation inside the oxygen tank that ignited due to a spark. This caused the tank to rupture, leading to the catastrophic failure that endangered the lives of the crew onboard. The crew, along with the ground control team, had to improvise and make critical decisions to ensure the safe return of Apollo 13.\n\nIt's important to note that the crew of Apollo 13, with their training, resourcefulness, and the support of NASA's ground control team, successfully navigated this crisis and returned safely to Earth, making it a remarkable story of resilience and teamwork in the face of adversity.",
+      "scores": {
+        "response_relevancy": 0.8958361753128185,
+        "faithfulness": 0.0,
+        "context_precision": 0.9999999999666667
+      }
+    },
+    {
+      "id": 4,
+      "category": "technical",
+      "question": "How did the crew survive the return to Earth after the accident?",
+      "response": "The crew of Apollo 13 survived the return to Earth after their accident through a series of innovative and heroic measures taken by both the astronauts and the NASA ground control team. Following an oxygen tank explosion that severely damaged the spacecraft, the crew had to rely on the Lunar Module (LM) Aquarius as a \"lifeboat\" to return safely to Earth.\n\nThe LM's systems were used to provide crucial life support, including oxygen, water, and power, while the Command Module (CM) was powered down to conserve resources. The crew and ground control worked together to overcome numerous challenges, such as limited power and consumables, extreme temperatures, and navigating a safe reentry trajectory.\n\nAdditionally, the crew had to perform a critical engine burn to adjust their trajectory for reentry and ensure they would enter the Earth's atmosphere at the right angle. By following the guidance from Mission Control and working together to solve problems creatively, the crew successfully splashed down in the Pacific Ocean on April 17, 1970.\n\nThe crew's resilience, teamwork, and the dedication of NASA's ground control were instrumental in ensuring the safe return of the Apollo 13 mission despite the life-threatening challenges they faced during the mission.",
+      "scores": {
+        "response_relevancy": 0.8530574956529294,
+        "faithfulness": 0.0,
+        "context_precision": 0.9999999999666667
+      }
+    },
+    {
+      "id": 5,
+      "category": "timeline",
+      "question": "When did the Apollo 13 mission launch and when did it return?",
+      "response": "The Apollo 13 mission launched on April 11, 1970. Unfortunately, due to an oxygen tank explosion, the mission had to be aborted, and the crew returned to Earth on April 17, 1970.",
+      "scores": {
+        "response_relevancy": 0.7055348023655316,
+        "faithfulness": 0.0,
+        "context_precision": 0.8333333332916666
+      }
+    },
+    {
+      "id": 6,
+      "category": "technical",
+      "question": "What role did the Lunar Module play in saving the Apollo 13 crew?",
+      "response": "During the Apollo 13 mission, the Lunar Module (LM) played a crucial role in saving the crew. Following an oxygen tank explosion that severely damaged the Service Module (SM), the LM became the crew's lifeboat, providing them with vital life support systems and a habitable environment. The LM's systems were used to regulate temperature, provide breathable air, and manage power supply for the crew.\n\nThe LM was not originally designed for the extended duration needed to support the crew until reentry, so modifications and adaptations had to be made. The LM's descent engine was utilized for course corrections to ensure a safe trajectory back to Earth. Additionally, the LM's consumables, like water and oxygen, were rationed carefully to sustain the crew until reentry.\n\nThe crew transferred to the LM, named Aquarius, after shutting down systems in the damaged Command Module (CM), which was no longer functional. The LM's role in providing a safe haven for the crew during the critical phase of the mission was instrumental in their survival and eventual safe return to Earth.",
+      "scores": {
+        "response_relevancy": 0.8462668218372027,
+        "faithfulness": 0.5,
+        "context_precision": 0.9999999999666667
+      }
+    }
+  ],
+  "aggregate": {
+    "response_relevancy": {
+      "mean": 0.7849986408109557,
+      "min": 0.6329495494196345,
+      "max": 0.8958361753128185
+    },
+    "faithfulness": {
+      "mean": 0.23095238095238094,
+      "min": 0.0,
+      "max": 0.6
+    },
+    "context_precision": {
+      "mean": 0.9722222221875,
+      "min": 0.8333333332916666,
+      "max": 0.9999999999666667
+    }
+  }
+}

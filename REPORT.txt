@@ -11,7 +11,7 @@ Three RAGAS metrics were selected for comprehensive evaluation:
 
 - **Response Relevancy**: Measures if the generated answer actually addresses the user's question
 - **Faithfulness**: Ensures the answer is grounded in the retrieved documents, not hallucinated
-- **RougeScore**: A non-LLM metric that measures text overlap between response and context, providing faster evaluation
+- **Context Precision**: Measures if the retrieved context documents are relevant to the question (LLM-based, no reference needed)
 
 ## Configuration Options
 

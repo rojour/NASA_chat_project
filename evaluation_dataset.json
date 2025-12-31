@@ -1,0 +1,34 @@
+{
+  "test_questions": [
+    {
+      "id": 1,
+      "category": "overview",
+      "question": "What was the Apollo 13 mission and what happened to it?"
+    },
+    {
+      "id": 2,
+      "category": "crew",
+      "question": "Who were the crew members of Apollo 13?"
+    },
+    {
+      "id": 3,
+      "category": "emergency",
+      "question": "What caused the explosion on Apollo 13?"
+    },
+    {
+      "id": 4,
+      "category": "technical",
+      "question": "How did the crew survive the return to Earth after the accident?"
+    },
+    {
+      "id": 5,
+      "category": "timeline",
+      "question": "When did the Apollo 13 mission launch and when did it return?"
+    },
+    {
+      "id": 6,
+      "category": "technical",
+      "question": "What role did the Lunar Module play in saving the Apollo 13 crew?"
+    }
+  ]
+}

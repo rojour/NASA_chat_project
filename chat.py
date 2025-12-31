@@ -70,10 +70,11 @@ def retrieve_documents(collection, query: str, n_results: int = 3,
         st.error(f"Error retrieving documents: {e}")
         return None
 
-def format_context(documents: List[str], metadatas: List[Dict]) -> str:
+def format_context(documents: List[str], metadatas: List[Dict],
+                   distances: Optional[List[float]] = None) -> str:
     """Format retrieved documents into context"""
-    
-    return rag_client.format_context(documents, metadatas)
+
+    return rag_client.format_context(documents, metadatas, distances)
 
 def generate_response(openai_key, user_message: str, context: str, 
                      conversation_history: List[Dict], model: str = "gpt-3.5-turbo") -> str:
@@ -182,6 +183,15 @@ def main():
         # Retrieval settings
         st.subheader("🔍 Retrieval Settings")
         n_docs = st.slider("Documents to retrieve", 1, 10, 3)
+
+        # Mission filter dropdown
+        mission_options = ["All", "apollo_13", "apollo_11", "challenger"]
+        mission_filter = st.selectbox(
+            "Filter by Mission",
+            options=mission_options,
+            format_func=lambda x: x.replace("_", " ").title() if x != "All" else x,
+            help="Filter retrieved documents by specific mission"
+        )
         
         # Evaluation settings
         st.subheader("📊 Evaluation Settings")
@@ -226,16 +236,19 @@ def main():
             with st.spinner("Searching documents and generating response..."):
                 # Retrieve relevant documents
                 docs_result = retrieve_documents(
-                    collection, 
-                    prompt, 
-                    n_docs
+                    collection,
+                    prompt,
+                    n_docs,
+                    mission_filter if mission_filter != "All" else None
                 )
                 
                 # Format context
                 context = ""
                 contexts_list = []
                 if docs_result and docs_result.get("documents"):
-                    context = format_context(docs_result["documents"][0], docs_result["metadatas"][0])
+                    # Get distances for score-based sorting (if available)
+                    distances = docs_result.get("distances", [[]])[0] if docs_result.get("distances") else None
+                    context = format_context(docs_result["documents"][0], docs_result["metadatas"][0], distances)
                     contexts_list = docs_result["documents"][0]
                     st.session_state.last_contexts = contexts_list
                 
